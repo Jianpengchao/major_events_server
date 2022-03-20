@@ -9,6 +9,8 @@ const expressJWT = require('express-jwt')
 const config = require('./config')
 // 导入用户路由模块
 const userRouter = require('./router/user')
+// 导入用户信息路由模块
+const userinfoRouter = require('./router/userinfo')
 
 const app = express()
 
@@ -32,6 +34,7 @@ app.use((req, res, next) => {
 app.use(expressJWT({secret: config.jwtSecretKey, algorithms: ['HS256']}).unless({path: [/^\/api/]}))
 
 app.use('/api', userRouter)
+app.use('/my', userinfoRouter)
 
 // 在路由之后，定义错误级别的中间件
 app.use((err, req, res, next) => {
