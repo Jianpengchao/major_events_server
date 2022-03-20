@@ -1,6 +1,3 @@
-// 导入验证规则的包
-const joi = require('@hapi/joi')
-
 /**
  *  number() 必须是数字
  *  integer() 正式
@@ -12,6 +9,9 @@ const joi = require('@hapi/joi')
  *  required() 必须填，不能为 undefined,
  *  email() 邮箱
  */
+
+// 导入验证规则的包
+const joi = require('@hapi/joi')
 
 // 必须为6-18位字母、数字
 const regPsd = /^(?![^a-zA-Z]+$)(?!\D+$)/
@@ -38,5 +38,25 @@ exports.update_userinfo_schema = {
     id,
     nickname,
     email: user_email
+  }
+}
+
+// 定义 oldPwd, newPwd 的验证规则
+// 定义验证更新密码信息表单数据的规则对象
+exports.update_password_schema = {
+  body: {
+    oldPwd: password,
+    // joi.ref('oldPwd') 表示 newPwd 的值必须和 oldPwd 的值保持一致
+    // joi.not(joi.ref('oldPwd')) 表示 newPwd 的值不能等于 oldPwd 的值
+    // .comcat() 表示合并 joi.not(joi.ref('oldPwd')) 和 password 这两个验证规则
+    newPwd: joi.not(joi.ref('oldPwd')).concat(password) // 新密码不能等于旧密码符合 password 规则
+  }
+}
+
+const avatar = joi.string().dataUri().required()
+// 定义验证更新头像信息表单数据的规则对象
+exports.update_avatar_schema = {
+  body: {
+    avatar
   }
 }
