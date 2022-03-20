@@ -12,6 +12,6 @@ const {reguser, login}= require('../router_handler/user')
 router.post('/reguser', expressJoi(reg_login_schema), reguser)
 
 // 登录
-router.post('/login', login)
+router.post('/login', expressJoi(reg_login_schema), login)
 
 module.exports = router

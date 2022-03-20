@@ -1,9 +1,13 @@
 const express = require('express')
 // 导入 ocrs 跨域解决中间件
 const cors = require('cors')
-
+// 导入验证规则的包
 const joi = require('@hapi/joi')
-
+// 将 token 解析成用户信息
+const expressJWT = require('express-jwt')
+// 导入全局配置文件
+const config = require('./config')
+// 导入用户路由模块
 const userRouter = require('./router/user')
 
 const app = express()
@@ -24,12 +28,17 @@ app.use((req, res, next) => {
   next()
 })
 
+// 一定在路由之前配置解析 token 的中间件
+app.use(expressJWT({secret: config.jwtSecretKey, algorithms: ['HS256']}).unless({path: [/^\/api/]}))
+
 app.use('/api', userRouter)
 
 // 在路由之后，定义错误级别的中间件
 app.use((err, req, res, next) => {
   // 验证失败导致的错误
   if(err instanceof joi.ValidationError) return res.cc(err)
+  // token无效的错误
+  if(err.name === 'UnauthorizedError') return res.cc('身份认证失败！')
   // 未知的错误
   res.cc(err)
 })
