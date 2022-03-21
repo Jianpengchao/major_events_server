@@ -11,6 +11,8 @@ const config = require('./config')
 const userRouter = require('./router/user')
 // 导入用户信息路由模块
 const userinfoRouter = require('./router/userinfo')
+// 导入文章分类的路由模块
+const artcateRouter = require('./router/artcate')
 
 const app = express()
 
@@ -35,6 +37,7 @@ app.use(expressJWT({secret: config.jwtSecretKey, algorithms: ['HS256']}).unless(
 
 app.use('/api', userRouter)
 app.use('/my', userinfoRouter)
+app.use('/my/article', artcateRouter)
 
 // 在路由之后，定义错误级别的中间件
 app.use((err, req, res, next) => {
