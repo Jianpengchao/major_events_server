@@ -16,7 +16,7 @@ exports.cates = (req, res) => {
     })
   })
 }
-// 新增文章分类代码的处理函数
+// 新增文章分类的处理函数
 exports.addcates = (req, res) => {
   const {name, alias } = req.body
   // 定义查询 分类名称 和 分类别名 是否被占用的 SQL 语句
@@ -44,12 +44,27 @@ exports.addcates = (req, res) => {
     })
   })
 }
-// 根据id删除文章分类代码的处理函数
+// 根据id删除文章分类的处理函数
 exports.deletecate = (req, res) => {
   const sql = `UPDATE ${dataBaseTable.artcate} SET is_delete=1 WHERE id=?`
   db.query(sql, req.params.id, (err, results) => {
     if(err) return res.cc(err)
     if(results.affectedRows !== 1) return res.cc('删除文章分类失败！')
     res.cc('删除文章分类成功！', 0)
+  })
+}
+// 根据id过去文章分类的处理函数
+exports.getcate = (req, res) => {
+  const sql = `SELECT * FROM ${dataBaseTable.artcate} WHERE id=?`
+  db.query(sql, req.params.id, (err, result) => {
+    if(err) return res.cc(err)
+
+    if(result.length !== 1) return res.cc('获取文章分类数据失败！')
+
+    res.send({
+      status: 0,
+      message: '获取文章分类数据成功！',
+      data: result[0]
+    })
   })
 }

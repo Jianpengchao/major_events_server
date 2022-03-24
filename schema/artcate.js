@@ -14,8 +14,8 @@ exports.add_cate_schema = {
 }
 
 const id = joi.number().required()
-// 定义验证删除文章分类表单数据的规则对象
-exports.delete_cate_schema = {
+// 定义验证(删除/获取)文章分类表单数据的规则对象
+exports.id_cate_schema = {
   params: {
     id
   }

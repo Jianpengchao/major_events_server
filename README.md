@@ -41,7 +41,7 @@ response：{
 
 ```
 
-### 3. 根据id文章分类
+### 3. 根据id删除文章分类
 ```json
 URL: http://127.0.0.1:3007/my/article/deletecate/:id
 method: GET
@@ -51,6 +51,26 @@ params: {
 response: {
     "status": 0,
     "message": "删除文章分类成功！"
+}
+
+```
+
+### 3. 根据id获取文章分类
+```json
+URL: http://127.0.0.1:3007/my/article/getcate/:id
+method: GET
+params: {
+  id: number 必传
+}
+response: {
+    "status": 0,
+    "message": "获取文章分类数据成功！",
+    "data": {
+        "Id": 1,
+        "name": "科技",
+        "alias": "KeJi",
+        "is_delete": 1
+    }
 }
 
 ```
