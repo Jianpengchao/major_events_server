@@ -74,3 +74,19 @@ response: {
 }
 
 ```
+
+### 3. 根据id更新文章分类
+```json
+URL: http://127.0.0.1:3007/my/article/updatecate
+method: GET
+body: {
+  id: number, 必传
+  name: sting, 必传
+  alias：string， 必传（字母或数字）
+}
+response: {
+    "status": 0,
+    "message": "更新文章分类成功！"
+}
+
+```

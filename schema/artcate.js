@@ -20,3 +20,11 @@ exports.id_cate_schema = {
     id
   }
 }
+// 定义验证根据id更新文章分类表单数据的规则对象
+exports.update_cate_schema = {
+  body: {
+    id,
+    name,
+    alias
+  }
+}
