@@ -13,10 +13,13 @@ const userRouter = require('./router/user')
 const userinfoRouter = require('./router/userinfo')
 // 导入文章分类的路由模块
 const artcateRouter = require('./router/artcate')
+// 导入文章的路由模块
+const articleRouter = require('./router/article')
 
 const app = express()
 
 app.use(cors())
+
 
 // 配置解析表单数据的中间件,只能解析 application/x-www-form-urlencoded 格式表单数据
 app.use(express.urlencoded({extended: false}))
@@ -38,6 +41,7 @@ app.use(expressJWT({secret: config.jwtSecretKey, algorithms: ['HS256']}).unless(
 app.use('/api', userRouter)
 app.use('/my', userinfoRouter)
 app.use('/my/article', artcateRouter)
+app.use('/my/article', articleRouter)
 
 // 在路由之后，定义错误级别的中间件
 app.use((err, req, res, next) => {

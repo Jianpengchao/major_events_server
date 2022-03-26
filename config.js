@@ -3,6 +3,9 @@ module.exports = {
   jwtSecretKey: 'vernin No1. ^_^',
   expiresIn: '10h',
   dataBaseTable: {
-    artcate: 'ev_article_cate'
+    // 文章分类数据表
+    artcate: 'ev_article_cate',
+    // 文章数据表
+    article: 'ev_articles' 
   }
 }
