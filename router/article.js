@@ -15,8 +15,11 @@ const upload = multer({ dest: path.join(__dirname, '../uploads') })
 
 const router = express.Router()
 
+const { id_cate_schema } = require('../schema/artcate')
+
 const {
-	addArticle
+	addArticle,
+	deleteArticle
 } = require('../router_handler/article')
 
 // 发布新文章
@@ -24,5 +27,7 @@ const {
 // 将文件类型的数据，解析并挂载到 req.file 属性中
 // 将文本类型的数据，解析并挂载到 req.body 属性中
 router.post('/add', upload.single('cover_img'), expressJoi(add_article_schema), addArticle)
+根据文章id删除文章
+router.delete('/delete/:id', expressJoi(id_cate_schema), deleteArticle)
 
 module.exports = router
