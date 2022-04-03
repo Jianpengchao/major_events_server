@@ -38,3 +38,13 @@ exports.deleteArticle = (req, res) => {
 		res.cc('删除文章分类成功！', 0)
 	})
 }
+
+exports.updateArticle = (req, res) => {
+	const { id } = req.body
+	const sql = `UPDATE ${dataBaseTable.article} SET ? WHERE id=?`
+	db.query(sql, [req.body, id] ,(err, reults) => {
+		if(err) return res.cc(err)
+		if(reults.affectedRows !== 1) return res.cc('更新文章失败！')
+		res.cc('更新文章分类成功！', 0)
+	})
+}

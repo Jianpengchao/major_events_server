@@ -23,6 +23,7 @@ app.use(cors())
 
 // 配置解析表单数据的中间件,只能解析 application/x-www-form-urlencoded 格式表单数据
 app.use(express.urlencoded({extended: false}))
+app.use(express.json())
 
 // 一定要在路由之前，封装 res.cc 函数
 app.use((req, res, next) => {
