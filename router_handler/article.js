@@ -38,7 +38,7 @@ exports.deleteArticle = (req, res) => {
 		res.cc('删除文章分类成功！', 0)
 	})
 }
-
+// 根据文章id更新文章处理函数
 exports.updateArticle = (req, res) => {
 	const { id } = req.body
 	const sql = `UPDATE ${dataBaseTable.article} SET ? WHERE id=?`
@@ -46,5 +46,18 @@ exports.updateArticle = (req, res) => {
 		if(err) return res.cc(err)
 		if(reults.affectedRows !== 1) return res.cc('更新文章失败！')
 		res.cc('更新文章分类成功！', 0)
+	})
+}
+// 根据文章id查看文章处理函数
+exports.getArticle = (req, res) => {
+	const sql = `SELECT * FROM ${dataBaseTable.article} WHERE id=?`
+	db.query(sql, req.params.id, (err, result) => {
+		if(err) return res.cc(err)
+		if(result.length !== 1) return res.cc('获取文章数据失败！')
+		res.send({
+			status: 0,
+      message: '获取文章数据成功！',
+      data: result[0]
+		})
 	})
 }

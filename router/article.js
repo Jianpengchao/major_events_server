@@ -19,7 +19,8 @@ const { id_cate_schema } = require('../schema/artcate')
 const {
 	addArticle,
 	deleteArticle,
-	updateArticle
+	updateArticle,
+	getArticle
 } = require('../router_handler/article')
 
 // 发布新文章
@@ -31,5 +32,7 @@ router.post('/add', upload.single('cover_img'), expressJoi(add_article_schema), 
 router.delete('/delete/:id', expressJoi(id_cate_schema), deleteArticle)
 // 根据文章id更新文章
 router.post('/update', expressJoi(update_article_schema), updateArticle)
+// 根据文章id查看文章
+router.get('/get/:id', expressJoi(id_cate_schema), getArticle)
 
 module.exports = router
