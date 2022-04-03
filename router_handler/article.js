@@ -61,3 +61,15 @@ exports.getArticle = (req, res) => {
 		})
 	})
 }
+// 获取所有文章数据处理函数
+exports.getArticles = (req, res) => {
+	const sql = `SELECT * FROM ${dataBaseTable.article} WHERE is_delete=0 ORDER BY ID ASC`
+	db.query(sql, (err, result) => {
+		if(err) return res.cc(res)
+		res.send({
+      status: 0,
+      message: '获取文章数据成功！',
+      data: result
+    })
+	})
+}
