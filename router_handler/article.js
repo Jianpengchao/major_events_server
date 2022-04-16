@@ -26,7 +26,7 @@ exports.addArticle = (req, res) => {
 		if (results.affectedRows !== 1) return res.cc('发布文章失败！')
 
 		// 发布文章成功
-		res.cc('发布文章成功', 0)
+		res.cc('发布文章成功！', 0)
 	})
 }
 // 根据文章id删除文章处理函数
@@ -35,7 +35,7 @@ exports.deleteArticle = (req, res) => {
 	db.query(sql, req.params.id, (err, reults) => {
 		if(err) return res.cc(err)
 		if(reults.affectedRows !== 1) return res.cc('删除文章分类失败！')
-		res.cc('删除文章分类成功！', 0)
+		res.cc('删除文章成功！', 0)
 	})
 }
 // 根据文章id更新文章处理函数
@@ -45,12 +45,12 @@ exports.updateArticle = (req, res) => {
 	db.query(sql, [req.body, id] ,(err, reults) => {
 		if(err) return res.cc(err)
 		if(reults.affectedRows !== 1) return res.cc('更新文章失败！')
-		res.cc('更新文章分类成功！', 0)
+		res.cc('更新文章成功！', 0)
 	})
 }
 // 根据文章id查看文章处理函数
 exports.getArticle = (req, res) => {
-	const sql = `SELECT * FROM ${dataBaseTable.article} WHERE id=?`
+	const sql = `SELECT * FROM ${dataBaseTable.article} WHERE id=? AND is_delete=0`
 	db.query(sql, req.params.id, (err, result) => {
 		if(err) return res.cc(err)
 		if(result.length !== 1) return res.cc('获取文章数据失败！')

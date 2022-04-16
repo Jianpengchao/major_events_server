@@ -68,7 +68,7 @@ exports.login = (req, res) => {
     // 对用户的信息进行加密，生成 Token 字符串
     const tokenStr = jwt.sign(user, config.jwtSecretKey, {expiresIn: config.expiresIn})
     res.send({
-      status: 1,
+      status: 0,
       message: '登录成功！',
       token: 'Bearer ' + tokenStr
     })

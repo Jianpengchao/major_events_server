@@ -24,7 +24,7 @@ router.get('/cates', cates)
 // 新增文章分类
 router.post('/addcates', expressJoi(add_cate_schema), addcates)
 // 根据id删除文章分类
-router.get('/deletecate/:id', expressJoi(id_cate_schema), deletecate)
+router.delete('/deletecate/:id', expressJoi(id_cate_schema), deletecate)
 // 根据id获取文章分类
 router.get('/getcate/:id', expressJoi(id_cate_schema), getcate)
 // 根据id更新文章分类

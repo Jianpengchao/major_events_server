@@ -53,7 +53,7 @@ exports.deletecate = (req, res) => {
 }
 // 根据id获取文章分类的处理函数
 exports.getcate = (req, res) => {
-  const sql = `SELECT * FROM ${dataBaseTable.artcate} WHERE id=?`
+  const sql = `SELECT * FROM ${dataBaseTable.artcate} WHERE id=? AND is_delete=0`
   db.query(sql, req.params.id, (err, result) => {
     if(err) return res.cc(err)
 

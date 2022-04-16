@@ -51,7 +51,7 @@ exports.updatePassword = (req, res) => {
     db.query(updatePwdSQL, [newPwd, userId], (err, result) => {
       if(err) return res.cc(err)
       if(result.affectedRows !== 1) return res.cc('更新密码失败！')
-      res.cc('更新密码成功！')
+      res.cc('更新密码成功！', 0)
     })
   })
 
@@ -63,6 +63,6 @@ exports.updateAvatar = (req, res) => {
   db.query(sql, [req.body.avatar, req.user.id], (err, results) => {
     if(err) return res.cc(err)
     if(results.affectedRows !== 1) return res.cc('更换头像失败！')
-    res.cc('更换头像成功！', 1)
+    res.cc('更换头像成功！', 0)
   })
 }
