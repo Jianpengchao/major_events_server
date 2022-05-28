@@ -5,7 +5,7 @@ const db = require('../db/index')
 
 // 获取用户信息处理函数
 exports.userInfo = (req, res) => {
-  const sql = 'SELECT id, username, nickname, email, user_pic FROM ev_users WHERE id=?'
+  const sql = `SELECT id, username, nickname, email, user_pic FROM ${config.dataBaseTable.user} WHERE id=?`
   // 只要身份认证成功了，expressJWT 中间件会在 req 身上添加 user 属性
   db.query(sql, req.user.id, (err, results) => {
     if(err) return res.cc(err)
@@ -22,7 +22,7 @@ exports.userInfo = (req, res) => {
 // 更新用户信息的处理函数
 exports.updateUserInfo = (req, res) => {
   const updateData = req.body
-  const sql = 'UPDATE ev_users SET ? WHERE id=?'
+  const sql = `UPDATE ${config.dataBaseTable.user} SET ? WHERE id=?`
   db.query(sql, [updateData, updateData.id], (err, results) => {
     if(err) return res.cc(err)
     // 执行 SQL 语句成功，但是响应行数不等于 1，也是失败的
@@ -36,7 +36,7 @@ exports.updateUserInfo = (req, res) => {
 exports.updatePassword = (req, res) => {
   const userId = req.user.id
   // 只要身份认证成功了，expressJWT 中间件会在 req 身上添加 user 属性
-  const sql = 'SELECT * FROM ev_users WHERE id=?'
+  const sql = `SELECT * FROM ${config.dataBaseTable.user} WHERE id=?`
   db.query(sql, userId, (err, results) => {
     if(err) return res.cc(err)
     // 判断结果是否存在
@@ -45,7 +45,7 @@ exports.updatePassword = (req, res) => {
     const compareResult = bcrypt.compareSync(req.body.oldPwd, results[0].password)
     if(!compareResult) return res.cc('原密码错误！')
     // 更新数据库密码
-    const updatePwdSQL = 'UPDATE ev_users SET password=? WHERE id=?'
+    const updatePwdSQL = `UPDATE ${config.dataBaseTable.user} SET password=? WHERE id=?`
     // 对新密码进行加密
     const newPwd = bcrypt.hashSync(req.body.newPwd, 10)
     db.query(updatePwdSQL, [newPwd, userId], (err, result) => {
@@ -59,7 +59,7 @@ exports.updatePassword = (req, res) => {
 
 // 更新用户头像的处理函数
 exports.updateAvatar = (req, res) => {
-  const sql = 'UPDATE ev_users SET user_pic=? WHERE id=?'
+  const sql = `UPDATE ${config.dataBaseTable.user} SET user_pic=? WHERE id=?`
   db.query(sql, [req.body.avatar, req.user.id], (err, results) => {
     if(err) return res.cc(err)
     if(results.affectedRows !== 1) return res.cc('更换头像失败！')

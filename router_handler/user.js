@@ -18,7 +18,7 @@ exports.reguser = (req, res) => {
   // }
 
   // 定义 SQL 语句，查询用户名是否被占用
-  const queryUser = 'SELECT * FROM ev_users WHERE username=?'
+  const queryUser = `SELECT * FROM ${config.dataBaseTable.user} WHERE username=?`
   db.query(queryUser, userInfo.username, (err, results) => {
     // 执行 SQL 语句失败
     if(err) {
@@ -32,7 +32,7 @@ exports.reguser = (req, res) => {
     // 用户名可以使用 ，调用 bcrypt.hashSync() 对密码进行加密
     userInfo.password = bcrypt.hashSync(userInfo.password, 10)
 
-    const addUserSQL = 'INSERT INTO ev_users SET ?'
+    const addUserSQL = `INSERT INTO ${config.dataBaseTable.user} SET ?`
     insertUserObj = {
       username: userInfo.username,
       password: userInfo.password
@@ -54,7 +54,7 @@ exports.reguser = (req, res) => {
 exports.login = (req, res) => {
   const userInfo = req.body
 
-  const sql = 'SELECT * FROM ev_users WHERE username=?'
+  const sql = `SELECT * FROM ${config.dataBaseTable.user} WHERE username=?`
   db.query(sql, userInfo.username, (err, results) => {
     if(err) return res.cc(err)
     // 找不到用户
