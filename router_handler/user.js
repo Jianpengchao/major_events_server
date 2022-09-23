@@ -42,7 +42,7 @@ exports.reguser = (req, res) => {
         return cc(err)
       }
       if(results.affectedRows !== 1) {
-        return res.cc('注册失败，请稍后重试！')
+        return res.cc('注册失败！')
       }
       res.cc('注册成功！', 0)
     })
